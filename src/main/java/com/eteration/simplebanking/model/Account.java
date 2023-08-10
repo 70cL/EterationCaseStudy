@@ -2,10 +2,12 @@ package com.eteration.simplebanking.model;
 
 
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NonNull
@@ -29,6 +32,8 @@ public class Account {
     private String accountNumber;
 
     private Double balance = 0.0;
+
+    private Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "account_id", referencedColumnName = "id")

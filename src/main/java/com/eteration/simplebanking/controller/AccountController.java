@@ -32,9 +32,4 @@ public class AccountController {
     public ResponseEntity<BaseResponse<TransactionStatus>> debit(@RequestBody TransactionRequest transactionRequest) throws AccountNotFoundException, InsufficientBalanceException {
         return ResponseEntity.ok(new BaseResponse<>(accountService.debit(transactionRequest.getAccountNumber() ,transactionRequest.getAmount())));
 	}
-
-    @PostMapping(value = "/test/{accountNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse<TransactionStatus>> test(@PathVariable String accountNumber, @RequestBody Transaction transaction) throws AccountNotFoundException, InsufficientBalanceException {
-        return ResponseEntity.ok(new BaseResponse<>(accountService.debit(accountNumber, transaction)));
-    }
 }

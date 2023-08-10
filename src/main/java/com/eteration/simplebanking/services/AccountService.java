@@ -1,6 +1,7 @@
 package com.eteration.simplebanking.services;
 
 import com.eteration.simplebanking.dto.AccountDTO;
+import com.eteration.simplebanking.dto.TransactionDTO;
 import com.eteration.simplebanking.exception.AccountNotFoundException;
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
 import com.eteration.simplebanking.model.*;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,10 +25,11 @@ public class AccountService {
 
     @Transactional
     public TransactionStatus credit(String accountNumber, Double amount) throws AccountNotFoundException, InsufficientBalanceException {
-        Account account = findAccount(accountNumber);
+        Account account = this.findAccount(accountNumber);
         String approvalCode = UUID.randomUUID().toString();
-
-        account.post(new DepositTransaction(amount, approvalCode));
+        Transaction transaction =  new DepositTransaction(amount);
+        transaction.setApprovalCode(approvalCode);
+        account.post(transaction);
         accountRepository.save(account);
 
         return new TransactionStatus("OK", approvalCode);
@@ -34,22 +37,14 @@ public class AccountService {
 
     @Transactional
     public TransactionStatus debit(String accountNumber, Double amount) throws AccountNotFoundException, InsufficientBalanceException {
-        Account account = findAccount(accountNumber);
+        Account account = this.findAccount(accountNumber);
         String approvalCode = UUID.randomUUID().toString();
-
-        account.post(new WithdrawalTransaction(amount, approvalCode));
-        accountRepository.save(account);
-
-        return new TransactionStatus("OK", approvalCode);
-    }
-
-
-    public TransactionStatus debit(String accountNumber, Transaction transaction) throws AccountNotFoundException, InsufficientBalanceException {
-        Account account = findAccount(accountNumber);
+        Transaction transaction = new WithdrawalTransaction(amount);
+        transaction.setApprovalCode(approvalCode);
 
         account.post(transaction);
         accountRepository.save(account);
 
-        return new TransactionStatus();
+        return new TransactionStatus("OK", approvalCode);
     }
 }

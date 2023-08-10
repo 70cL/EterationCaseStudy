@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 public class PhoneBillPaymentTransaction extends BillPaymentTransaction{
     private String phoneNumber;
 
-    public PhoneBillPaymentTransaction(String payee, Double amount, String phoneNumber, String approvalCode){
-        super(payee, amount, approvalCode);
+    public PhoneBillPaymentTransaction(String payee, Double amount, String phoneNumber){
+        super(payee, amount);
         this.phoneNumber = phoneNumber;
     }
 }

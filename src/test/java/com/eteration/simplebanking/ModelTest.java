@@ -54,14 +54,14 @@ import static org.junit.jupiter.api.Assertions.*;
 		assertEquals(0, account.getTransactions().size());
 
 		// Deposit Transaction
-		DepositTransaction depositTrx = new DepositTransaction(100,"");
+		DepositTransaction depositTrx = new DepositTransaction(100);
 		assertNotNull(depositTrx.getDate());
 		account.post(depositTrx);
 		assertEquals(100, account.getBalance());
 		assertEquals(1, account.getTransactions().size());
 
 		// Withdrawal Transaction
-		WithdrawalTransaction withdrawalTrx = new WithdrawalTransaction(60,"");
+		WithdrawalTransaction withdrawalTrx = new WithdrawalTransaction(60);
 		assertNotNull(withdrawalTrx.getDate());
 		account.post(withdrawalTrx);
 		assertEquals(40, account.getBalance());

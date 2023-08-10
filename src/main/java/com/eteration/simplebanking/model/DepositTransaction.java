@@ -9,8 +9,8 @@ import javax.persistence.*;
 @DiscriminatorValue("DepositTransaction")
 public class DepositTransaction extends Transaction{
 
-    public DepositTransaction(double amount, String approvalCode) {
-        super(amount, approvalCode);
+    public DepositTransaction(double amount) {
+        super(amount);
     }
 
     @Override

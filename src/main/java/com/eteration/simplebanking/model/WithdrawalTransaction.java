@@ -13,8 +13,8 @@ import javax.persistence.*;
 @DiscriminatorValue("WithdrawalTransaction")
 public class WithdrawalTransaction extends Transaction{
 
-    public WithdrawalTransaction(double amount, String approvalCode) {
-        super(amount, approvalCode);
+    public WithdrawalTransaction(double amount) {
+        super(amount);
     }
 
     @Override

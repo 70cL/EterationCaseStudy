@@ -1,15 +1,13 @@
 package com.eteration.simplebanking.model;
 
 import com.eteration.simplebanking.exception.InsufficientBalanceException;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.UUID;
 
 
 @NoArgsConstructor
@@ -22,6 +20,7 @@ import java.util.UUID;
 public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     private Timestamp date;
@@ -31,10 +30,9 @@ public abstract class Transaction {
     @Column(insertable = false, updatable = false)
     private String type;
 
-    Transaction(double amount, String approvalCode) {
+    Transaction(double amount) {
         this.date = new Timestamp(System.currentTimeMillis());
         this.amount = amount;
-        this.approvalCode = approvalCode;
     }
 
     private String approvalCode;
