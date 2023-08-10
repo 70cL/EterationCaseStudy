@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,12 @@ public class AccountService {
 
     public Account findAccount(String accountNumber) throws AccountNotFoundException {
         return accountRepository.findByAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
+    }
+
+    public boolean createAccount(String owner, String accountNumber){
+        Account account = new Account(owner, accountNumber);
+        accountRepository.save(account);
+        return true;
     }
 
     @Transactional

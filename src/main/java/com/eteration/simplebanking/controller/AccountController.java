@@ -24,6 +24,10 @@ public class AccountController {
     public ResponseEntity<BaseResponse<Account>> getAccount(@PathVariable String accountId) throws AccountNotFoundException {
         return ResponseEntity.ok(new BaseResponse<>(accountService.findAccount(accountId)));
     }
+    @PostMapping(value = "/create/{owner}/{accountNumber}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse<Boolean>> createAccount(@PathVariable String owner, @PathVariable String accountNumber) {
+        return ResponseEntity.ok(new BaseResponse<>(accountService.createAccount(owner, accountNumber)));
+    }
     @PostMapping(value = "/credit", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse<TransactionStatus>> credit(@RequestBody TransactionRequest transactionRequest) throws AccountNotFoundException, InsufficientBalanceException {
         return ResponseEntity.ok(new BaseResponse<>(accountService.credit(transactionRequest.getAccountNumber() ,transactionRequest.getAmount())));
